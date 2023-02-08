@@ -15,11 +15,23 @@ function App() {
     }
   };
 
-  const editBook = (params) => {
+  const editBookById = (id, newTitle) => {
+    console.log('App editBookById:', id, newTitle);
+    const updatedBooks = books.map((book) => {
+      if (book.id === id) {
+        return { ...book, title: newTitle };
+      };
+      return book;
+    });
+    setBooks(updatedBooks);
 
   };
 
-  const deleteBook = (params) => {
+  const deleteBookById = (id) => {
+    const updatedBooks = books.filter((book) => {
+      return book.id !== id;
+    });
+    setBooks(updatedBooks);
 
   };
 
@@ -28,7 +40,8 @@ function App() {
 
   return (
     <div className='App'>
-      <div><BookList books={books} /></div>
+      <h1>Reading List</h1>
+      <div><BookList books={books} onDelete={deleteBookById} onEdit={editBookById} /></div>
       <div><BookCreate onCreate={createBook} /></div>
     </div>
   );
