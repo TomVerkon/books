@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import BookCreate from "./components/BookCreate";
-import BookList from "./components/BookList";
+import { createContext, useState } from "react";
+import axios from "axios";
 
+const BooksContext = createContext();
 
-function App() {
-
+function Provider({ children }) {
   const [books, setBooks] = useState([]);
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
 
   const fetchBooks = async () => {
     const response = await axios.get('http://localhost:3001/books');
@@ -46,15 +40,19 @@ function App() {
   };
 
 
-
+  const valueToShare = {
+    books: books,
+    setBooks: (books) => {
+      setBooks(books);
+    }
+  };
 
   return (
-    <div className='App'>
-      <h1>Reading List</h1>
-      <div><BookList books={books} onDelete={deleteBookById} onEdit={editBookById} /></div>
-      <div><BookCreate onCreate={createBook} /></div>
-    </div>
+    <BooksContext.Provider value={{}}>
+      {children}
+    </BooksContext.Provider>
   );
 }
 
-export default App;
+export default BooksContext;
+export { Provider };
