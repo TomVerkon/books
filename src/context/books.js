@@ -41,14 +41,15 @@ function Provider({ children }) {
 
 
   const valueToShare = {
-    books: books,
-    setBooks: (books) => {
-      setBooks(books);
-    }
+    books,
+    deleteBookById,
+    createBook,
+    editBookById,
+    fetchBooks
   };
 
   return (
-    <BooksContext.Provider value={{}}>
+    <BooksContext.Provider value={valueToShare} >
       {children}
     </BooksContext.Provider>
   );
